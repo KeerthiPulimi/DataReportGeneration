@@ -1,0 +1,10 @@
+
+/* Custom styles for spacing between navbar items */
+.navbar-nav .nav-link {
+  margin-right: 10px; /* Adjust as needed */
+}
+
+/* Custom styles for Start Date and End Date inputs */
+.container {
+  margin-top: 40px; /* Adjust to push the form below the navbar */
+}
