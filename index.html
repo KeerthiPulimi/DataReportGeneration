@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
-    <!-- Custom CSS for centering the date inputs -->
+    <!-- Custom CSS for centering the date inputs and navigation links -->
     <style>
         .center-container {
             display: flex;
@@ -43,10 +43,16 @@
         .navbar-expand-lg .navbar-nav .nav-link {
             padding-right: 6rem;
             padding-left: 6rem;
-            color: white; /* Set nav link color to white */
+            color: white; /* Set default nav link color to white */
         }
         .navbar {
             background-color: #06357a !important;
+        }
+        .navbar-light .navbar-brand {
+            color: rgb(255 255 255 / 90%);
+        }
+        .navbar-brand img {
+            filter: invert(1); /* Invert the color of the image (make it white) */
         }
 
         /* Fixed positioning for header and navbar */
@@ -58,9 +64,10 @@
             z-index: 1000; /* Ensure it's above other content */
         }
 
-        /* Custom CSS for hover effect */
-        .navbar-expand-lg .navbar-nav .nav-link:hover {
-            color: lightgray; /* Change nav link color on hover */
+        /* Custom CSS for hover effect and active page */
+        .navbar-expand-lg .navbar-nav .nav-link:hover,
+        .navbar-expand-lg .navbar-nav .nav-link.active {
+            color: lightgray; /* Change nav link color on hover or when active */
         }
         .datepicker table td.hover {
             background-color: lightgray !important;
@@ -151,6 +158,15 @@
                 }
             );
         }
+    </script>
+    <script>
+        // JavaScript to set the active link based on the current URL
+        $(document).ready(function() {
+            var url = window.location.pathname;
+            var filename = url.substring(url.lastIndexOf('/')+1);
+            $('.navbar-nav .nav-link').removeClass('active');
+            $('.navbar-nav .nav-link[href="'+filename+'"]').addClass('active');
+        });
     </script>
 </body>
 </html>
