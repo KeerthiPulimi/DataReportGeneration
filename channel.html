@@ -26,20 +26,11 @@
             height: 100vh;
         }
 
-        /* Adjusting the size of date input boxes */
         .form-control {
-            width: 20px; /* Adjust width as needed */
+            width: auto; /* Adjust width as needed, changed from 20px to auto for better visibility */
+            min-width: 200px; /* Ensure dropdowns have a minimum width */
         }
-        .input-group {
-            position: relative;
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-wrap: wrap;
-            flex-wrap: wrap;
-            -ms-flex-align: stretch;
-            align-items: stretch;
-            width: 25%;
-        }
+
         .navbar-expand-lg .navbar-nav .nav-link {
             padding-right: 6rem;
             padding-left: 6rem;
@@ -55,7 +46,6 @@
             filter: invert(1); /* Invert the color of the image (make it white) */
         }
 
-        /* Fixed positioning for header and navbar */
         .fixed-top-container {
             position: fixed;
             top: 0;
@@ -64,7 +54,6 @@
             z-index: 1000; /* Ensure it's above other content */
         }
 
-        /* Custom CSS for hover effect and active page */
         .navbar-expand-lg .navbar-nav .nav-link:hover,
         .navbar-expand-lg .navbar-nav .nav-link.active {
             color: lightgray; /* Change nav link color on hover or when active */
@@ -73,19 +62,9 @@
             background-color: lightgray !important;
             cursor: pointer;
         }
-        /* Adjusting the size of dropdown input boxes */
-        .form-control {
-            width: auto; /* Adjust width as needed, changed from 20px to auto for better visibility */
-            min-width: 200px; /* Ensure dropdowns have a minimum width */
-        }
-
-        /* Adjusting the size of dropdown input boxes */
-    
-
     </style>
 </head>
 <body>
-    <!-- Fixed container for header and navbar -->
     <div class="fixed-top-container">
         <header>
             <h1 style="color: rgb(37, 7, 106); text-align: center;">Data Exchange Statics Report Generation</h1>
@@ -93,7 +72,6 @@
         <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #06357a !important;">
             <div class="container">
                 <a class="navbar-brand" href="#">
-                    <!-- Adjust the src attribute to point to the correct image file -->
                     <img src="loho.png" alt="NRSC Logo" style="height: 40px; width: auto; margin-right: 10px;">
                     NRSC
                 </a>
@@ -117,9 +95,8 @@
         </nav>
     </div>
 
-    <!-- Centered container for date inputs -->
     <div class="center-container">
-        <div class="container">
+        <div class="container" style="margin-top: 150px;"> <!-- Adjusted for fixed navbar -->
             <div class="form-group">
                 <label class="font-weight-bold" for="startDate">Start Date:</label>
                 <div class="input-group date">
@@ -142,7 +119,6 @@
                     <input class="form-control" type="text" name="endDate" id="endDate" placeholder="dd/mm/yyyy">
                 </div>
             </div>
-            <!-- Dropdown lists -->
             <div class="form-group">
                 <label class="font-weight-bold" for="channelSelect"> Deg Name:</label>
                 <select class="form-control" id="channelSelect">
@@ -163,15 +139,13 @@
                 <select class="form-control" id="channelDetailsSelect">
                     <!-- Options will be dynamically populated based on the selection in the first dropdown -->
                 </select>
-            <!-- Submit button -->
-            <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
         </div>
     </div>
 
-    <!-- List of channels -->
-    
-
-    <!-- JavaScript to control the actions of the date picker -->
     <script type="text/javascript">
         function setDatepicker(_this) {
             let className = $(_this).parent().parent().parent().attr('class');
@@ -193,39 +167,31 @@
         }
     </script>
     <script>
-        // JavaScript to set the active link based on the current URL
         $(document).ready(function() {
-            var url = window.location.pathname;
-            var filename = url.substring(url.lastIndexOf('/')+1);
-            $('.navbar-nav .nav-link').removeClass('active');
-            $('.navbar-nav .nav-link[href="'+filename+'"]').addClass('active');
-        });
-        $(document).ready(function() {
-            $('#designationSelect').chang(function() {
-                var designation = $(this).val();
-                var channels = {
+            $('#channelSelect').change(function() {
+                var selectedChannel = $(this).val();
+                var channelDetails = {
                     'SD1': ['A', 'B', 'C'],
-                    'SD2': ['A1', 'B1', 'C1'],
+                    'SD2': [' A1', 'B1', 'C1'],
                     'SD3': ['A2', 'B2', 'C2'],
-                    'SpaceVRF': ['A4', 'B4', 'C4'],
-                    'VPN': ['A5', 'B5', 'C5'],
-                    'Application': ['A6', 'B6', 'C6'],
-                    'ANT-T1': ['A7', 'B7', 'C7'],
-                    'ANT-T2': ['A8', 'B8', 'C8'],
-                    'SVB': ['A9', 'B9', 'C9']
+                    'SpaceVRF': ['A3', 'B3','C3'],
+                    'VPN': ['A4', 'B4','C4'],
+                    'Application': ['Appl5', 'B5','C5'],
+                    'ANT-T1': ['ANT-T1 chan 1', 'ANT-T1 chan 2','ANT-T1 chan 3'],
+                    'ANT-T2': ['ANT-T2 chan A', 'ANT-T2 chan B','ANT-T2 chan 3'],
+                    'SVB': ['SVB chan 01', 'SVB chan 02','SVB chan 03']
                 };
 
-                var regions = channels[designation] || [];
-                var $regionSelect = $('#regionSelect').empty().append('<option selected>Select Region</option>');
-        
-                $.each(regions, function(index, region) {
-                $regionSelect.append($('<option></option>').attr('value', region).text(region));
+                var details = channelDetails[selectedChannel];
+                $('#channelDetailsSelect').empty().append('<option selected disabled>Select Channel Detail</option>');
+                $(details).each(function(index, value) {
+                    $('#channelDetailsSelect').append($('<option>', {
+                        value: value,
+                        text: value
+                    }));
+                });
             });
         });
-    });
-
-        
-
     </script>
 </body>
 </html>
