@@ -75,9 +75,12 @@
         }
         /* Adjusting the size of dropdown input boxes */
         .form-control {
-      width: auto; /* Adjust width as needed, changed from 20px to auto for better visibility */
-      min-width: 200px; /* Ensure dropdowns have a minimum width */
-    }
+            width: auto; /* Adjust width as needed, changed from 20px to auto for better visibility */
+            min-width: 200px; /* Ensure dropdowns have a minimum width */
+        }
+
+        /* Adjusting the size of dropdown input boxes */
+    
 
     </style>
 </head>
@@ -141,8 +144,8 @@
             </div>
             <!-- Dropdown lists -->
             <div class="form-group">
-                <label class="font-weight-bold" for="designationSelect">Select Deg Name:</label>
-                <select class="form-control" id="designationSelect">
+                <label class="font-weight-bold" for="channelSelect"> Deg Name:</label>
+                <select class="form-control" id="channelSelect">
                     <option disabled selected>Select Deg Name</option> <!-- Placeholder option -->
                     <option value="SD1">SD1</option>
                     <option value="SD2">SD2</option>
@@ -156,37 +159,17 @@
                 </select>
             </div>
             <div class="form-group">
-                <label class="font-weight-bold" for="regionSelect">Select Region:</label>
-                <select class="form-control" id="regionSelect">
-                    <option value="region1">Region 1</option>
-                    <option value="region2">Region 2</option>
-                    <option value="region3">Region 3</option>
+                <label class="font-weight-bold" for="channelDetailsSelect">Channel Details:</label>
+                <select class="form-control" id="channelDetailsSelect">
+                    <!-- Options will be dynamically populated based on the selection in the first dropdown -->
                 </select>
-            </div>
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     </div>
 
     <!-- List of channels -->
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h2 class="mt-5">List of Channels</h2>
-                <ul>
-                    <li>SD1</li>
-                    <li>SD2</li>
-                    <li>SD3</li>
-                    <li>SpaceVRF</li>
-                    <li>VPN</li>
-                    <li>Application</li>
-                    <li>ANT-T1</li>
-                    <li>ANT-T2</li>
-                    <li>SVB</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    
 
     <!-- JavaScript to control the actions of the date picker -->
     <script type="text/javascript">
@@ -217,6 +200,32 @@
             $('.navbar-nav .nav-link').removeClass('active');
             $('.navbar-nav .nav-link[href="'+filename+'"]').addClass('active');
         });
+        $(document).ready(function() {
+            $('#designationSelect').chang(function() {
+                var designation = $(this).val();
+                var channels = {
+                    'SD1': ['A', 'B', 'C'],
+                    'SD2': ['A1', 'B1', 'C1'],
+                    'SD3': ['A2', 'B2', 'C2'],
+                    'SpaceVRF': ['A4', 'B4', 'C4'],
+                    'VPN': ['A5', 'B5', 'C5'],
+                    'Application': ['A6', 'B6', 'C6'],
+                    'ANT-T1': ['A7', 'B7', 'C7'],
+                    'ANT-T2': ['A8', 'B8', 'C8'],
+                    'SVB': ['A9', 'B9', 'C9']
+                };
+
+                var regions = channels[designation] || [];
+                var $regionSelect = $('#regionSelect').empty().append('<option selected>Select Region</option>');
+        
+                $.each(regions, function(index, region) {
+                $regionSelect.append($('<option></option>').attr('value', region).text(region));
+            });
+        });
+    });
+
+        
+
     </script>
 </body>
 </html>
